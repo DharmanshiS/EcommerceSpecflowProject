@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uk.co.nfocus.EcommerceSpecflowProject", "uk.co.nfocus.EcommerceSpecflowProject\uk.co.nfocus.EcommerceSpecflowProject.csproj", "{8FFCE6B5-BB54-4FA4-9F9A-C16126D5016D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E88071BD-7CB2-42A2-8C3D-18051DD0693C}"
+	ProjectSection(SolutionItems) = preProject
+		settings.runsettings = settings.runsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
