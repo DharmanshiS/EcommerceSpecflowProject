@@ -2,12 +2,16 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Edge;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using uk.co.nfocus.EcommerceSpecflowProject.POMs;
+using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
+using BoDi;
+using System.ComponentModel;
 
 
 
@@ -19,13 +23,14 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
     {
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver; //field to share driver between class methods
-        //private readonly WDWrapper _wdWrapper;
+        private readonly WebDriverWrapper _webDriverWrapper;
 
-        public Base(ScenarioContext scenarioContext) //Constructor will be run by Specflow when it instantiates this class to use the [Before] step. When it does that it makes a ScenarioContext object and it is shared between the classes
+        public Base(IObjectContainer container, WebDriverWrapper wrapper, ScenarioContext scenarioContext) //Constructor will be run by Specflow when it instantiates this class to use the [Before] step. When it does that it makes a ScenarioContext object and it is shared between the classes
         {
-            //_wdWrapper = wdWrapper; //WDWrapper will be instanticated and passed in by Specflow
+            _webDriverWrapper = wrapper; //the wrapper will be instanticated and passed in by Specflow
             _scenarioContext = scenarioContext;
         }
+
 
         [Before]
         public void SetUp()
@@ -37,18 +42,20 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
                 case "firefox":
                     _driver = new FirefoxDriver();
                     break;
-                case "chrome":
+                case "edge":
+                    _driver = new EdgeDriver();
+                    break;
+                default:
                     _driver = new ChromeDriver();
                     break;
-
-                default:
-                    Assert.Fail("No browser set in runsettings");
-                    break;
             }
+            
+            _webDriverWrapper.Driver = _driver; //Typesafe storage of WebDriver
+            //_scenarioContext["webdriver"] = _driver; //
 
-            //_wdWrapper.Driver = _driver; //Typesafe storage of WebDriver
-            _scenarioContext["webdriver"] = _driver;
+            _driver.Manage().Window.Maximize(); //Make the screen full size
             _driver.Url = "https://www.edgewordstraining.co.uk/demo-site/my-account/";
+            //_driver.Url = TestContext.Parameters["baseURL"];
 
 
         }

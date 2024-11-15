@@ -1,9 +1,11 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using TechTalk.SpecFlow;
 using uk.co.nfocus.EcommerceSpecflowProject.POMs;
+using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
 
 namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
 {
@@ -13,17 +15,13 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver;
 
-        public SuccessfulOrderStepDefinitions(ScenarioContext scenarioContext)
+        public SuccessfulOrderStepDefinitions(WebDriverWrapper webDriverWrapper, ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext; //stpres the relevant variables that we need
-            _driver = (IWebDriver)_scenarioContext["webdriver"];
+            //_driver = (IWebDriver)_scenarioContext["webdriver"]; //naive method to pass around the webdriver
+            _driver = webDriverWrapper.Driver;
 
         }
-
-
-
-        //Background Steps: preaparing the site to begin the test cases
-
 
 
         [Given(@"the user is logged in with username '([^']*)' and password '([^']*)'")]
@@ -48,9 +46,17 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
 
             ShopPage ShopPagePOM = new ShopPage(_driver);
             ShopPagePOM.HoverOverCartSymbol();
-            Assert.That(ShopPagePOM.CartMessage, Does.Contain("No products in the cart"), "The cart is not empty."); //Check that the cart is empty
-            Console.WriteLine("Cart is empty.");
-            
+            //Assert.That(ShopPagePOM.CartMessage, Does.Contain("No products in the cart"), "The cart is not empty."); //Check that the cart is empty
+            //Console.WriteLine("Cart is empty.");
+
+            if (!ShopPagePOM.CartMessage.Contains("No products in the cart"))
+            {
+                CartPage CartPagePOM = new CartPage(_driver);
+                CartPagePOM.DeleteAllItems();
+                Console.WriteLine("Deleted all the items.");
+            }
+            Console.WriteLine("Cart is now empty.");
+
             ShopPagePOM.AddToCart();
             Console.WriteLine("Successfully added first product to the cart.");
 
@@ -88,7 +94,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             CartPage CartPagePOM = new CartPage(_driver);
             decimal subtotal = CartPagePOM.CartTotalSubtotal;
             decimal discount = CartPagePOM.CartTotalCouponDiscount;
-            decimal expectedDiscount = subtotal * 0.1m;
+            decimal expectedDiscount = subtotal * 0.15m;
             Assert.That(discount, Is.EqualTo(expectedDiscount), "The discount applied is not 15 percent.");
             Console.WriteLine("The coupon has taken off 15 percent.");
         }

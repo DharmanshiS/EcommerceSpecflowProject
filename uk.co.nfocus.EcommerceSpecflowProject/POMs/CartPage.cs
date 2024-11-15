@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 
         //Locators
         private IWebElement _couponBox => _driver.FindElement(By.CssSelector("#coupon_code"));
-        private IWebElement _applyCouponButton => _driver.FindElement(By.CssSelector("#post-5 > div > div > form > table > tbody > tr:nth-child(2) > td > div > button"));
+        private IWebElement _applyCouponButton => _driver.FindElement(By.CssSelector("button[value='Apply coupon']"));
         
         //for checking coupon success - assertion
         public string CouponSuccessMessageAlreadyThere
@@ -31,7 +32,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         }
         public string CouponSuccessMessage
         {
-            get => Utilities.Helpers.Wait(_driver, By.CssSelector("div[role='alert']")  , 5).Text;
+            get => Utilities.Helpers.Wait(_driver, By.CssSelector("#post-5 > div > div > div.woocommerce-notices-wrapper > div"), 5).Text;
 
         }
 
@@ -53,7 +54,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
             get => decimal.Parse(Regex.Replace(_driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span > bdi")).Text, @"[^\d.]", ""));
         }
         private IWebElement _checkoutButton => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > div > a"));
-
+        
 
         //Service Methods
         public void AddCoupon(string coupon)
@@ -67,5 +68,26 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         {
             _checkoutButton.Click();
         }
+
+        public void DeleteAllItems()
+        {     
+            bool itemsPresent;
+            do
+            {
+                try
+                {
+                    var deleteButton = _driver.FindElement(By.LinkText("×")); // Find the first delete button and click it
+                    deleteButton.Click();
+                    Thread.Sleep(1000); // Wait for the item to be removed
+                    itemsPresent = _driver.FindElements(By.LinkText("×")).Count > 0; // Check if there are more delete buttons
+                }
+                catch (NoSuchElementException)
+                {
+                    // No more delete buttons found
+                    itemsPresent = false;
+                }
+            } while (itemsPresent);
+        }
+
     }
 }

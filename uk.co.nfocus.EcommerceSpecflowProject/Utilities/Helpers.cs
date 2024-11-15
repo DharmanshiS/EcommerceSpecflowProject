@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
 
 namespace uk.co.nfocus.EcommerceSpecflowProject.Utilities
 {
@@ -16,5 +17,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.Utilities
             IWebElement element = wait.Until(drv => drv.FindElement(locator));
             return element;
         }
+
+
     }
 }

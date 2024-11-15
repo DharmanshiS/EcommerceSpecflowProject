@@ -48,5 +48,10 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
             action.MoveToElement(_cartSymbol).Perform();
         }
 
+        public void AddToCartFromSymbol()
+        {
+            _cartSymbol.Click();
+        }
+
     }
 }
