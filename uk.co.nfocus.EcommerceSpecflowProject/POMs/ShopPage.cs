@@ -25,7 +25,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         private IWebElement _firstViewCart => Utilities.Helpers.Wait(_driver, By.CssSelector("#main > ul > li.product.type-product.post-27.status-publish.first.instock.product_cat-accessories.has-post-thumbnail.sale.shipping-taxable.purchasable.product-type-simple > a.added_to_cart.wc-forward"), 5);
 
 
-        // Find the element you need to hover over
+        // Locators: Find the element you need to hover over
         private IWebElement _cartSymbol => _driver.FindElement(By.CssSelector("#site-header-cart > li:nth-child(1) > a"));
 
         public string CartMessage
@@ -33,7 +33,11 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
             get => _driver.FindElement(By.CssSelector("#site-header-cart > li:nth-child(2) > div > div > p")).Text;
         }
 
-        //Service Methods
+        // Service Methods
+        public void AddToCartFromSymbol()
+        {
+            _cartSymbol.Click();
+        }
         public void AddToCart()
         {
             _firstAddToCart.Click();
@@ -48,10 +52,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
             action.MoveToElement(_cartSymbol).Perform();
         }
 
-        public void AddToCartFromSymbol()
-        {
-            _cartSymbol.Click();
-        }
+        
 
     }
 }

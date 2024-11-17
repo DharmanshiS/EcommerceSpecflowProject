@@ -80,12 +80,11 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         public void WhenIApplyTheCoupon(string coupon)
         {
             CartPage CartPagePOM = new CartPage(_driver);
+            Console.WriteLine(coupon);
             CartPagePOM.AddCoupon(coupon);
             bool CouponCondition = CartPagePOM.CouponSuccessMessage.Contains("Coupon code applied successfully.");
-            Assert.That(CouponCondition, Is.True, "Coupon code was not applied successfully."); // Assert that the coupon condition is true
+            Assert.That(CouponCondition, Is.True, "Coupon code was not applied successfully.");                                  // Assert that the coupon condition is true
             Console.WriteLine("Successfully applied the coupon.");
-
-            
         }
 
         [Then(@"it should successfully apply '([^']*)' percent off")]

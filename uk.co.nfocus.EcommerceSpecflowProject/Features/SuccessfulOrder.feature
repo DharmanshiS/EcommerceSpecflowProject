@@ -14,3 +14,6 @@ And the total cost is correct
 Scenario: Check the order is present in My Orders
 When I checkout
 Then it should show the order in My Orders
+
+
+
