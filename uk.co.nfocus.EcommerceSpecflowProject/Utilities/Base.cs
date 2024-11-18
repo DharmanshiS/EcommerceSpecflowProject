@@ -51,11 +51,10 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             }
             
             _webDriverWrapper.Driver = _driver; //Typesafe storage of WebDriver
-            //_scenarioContext["webdriver"] = _driver; //
-
+            
             _driver.Manage().Window.Maximize(); //Make the screen full size
             _driver.Url = "https://www.edgewordstraining.co.uk/demo-site/my-account/";
-            //_driver.Url = TestContext.Parameters["baseURL"];
+            
 
 
         }
@@ -67,7 +66,7 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             NavigationBarPOM.NavigateToMyAccount();
             NavigationBarPOM.Logout();
 
-            Thread.Sleep(5000); //Just there so we can see the browser before it quits
+            Thread.Sleep(1000); //so the browser doesn't close so quickly
             _driver.Quit();
 
         }

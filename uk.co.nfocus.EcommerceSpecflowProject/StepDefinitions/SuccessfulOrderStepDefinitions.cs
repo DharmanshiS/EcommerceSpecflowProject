@@ -120,7 +120,8 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             Console.WriteLine("Successfully pressed 'checkout'.");
 
             CheckoutPage CheckoutPagePOM = new CheckoutPage(_driver);
-            CheckoutPagePOM.FillBillingDetails("d", "s", "abc", "def", "IG5 0QL", "0123456789");
+            BillingDetails billingDetails = new BillingDetails("d", "s", "abc", "def", "IG5 0QL", "0123456789");  //billing details object
+            CheckoutPagePOM.FillBillingDetails(billingDetails);
             Console.WriteLine("Successfully filled in the billing details.");
             CheckoutPagePOM.PlaceOrder();
             Console.WriteLine("Successfully placed the order.");

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
 
 namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 {
@@ -23,7 +24,6 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         {
             get => _driver.FindElement(By.CssSelector("#post-7 > header > h1")).Text;
         }
-        private IWebElement _myAccountNavigation => _driver.FindElement(By.CssSelector("#menu-item-46 > a"));
         private IWebElement _firstNameField => _driver.FindElement(By.CssSelector("#billing_first_name"));
         private IWebElement _lastNameField => _driver.FindElement(By.CssSelector("#billing_last_name"));
         private IWebElement _streetAddressField => _driver.FindElement(By.CssSelector("#billing_address_1"));
@@ -34,25 +34,25 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         private IWebElement _placeOrderButton => Utilities.Helpers.Wait(_driver, By.CssSelector("#place_order"), 15);
 
         //Service methods
-        public void FillBillingDetails(string firstname, string lastname, string address, string city, string postcode, string phoneNo)
+        public void FillBillingDetails(BillingDetails details)
         {
             _firstNameField.Clear();
-            _firstNameField.SendKeys(firstname);
+            _firstNameField.SendKeys(details.FirstName);
 
             _lastNameField.Clear();
-            _lastNameField.SendKeys(lastname);
+            _lastNameField.SendKeys(details.LastName);
 
             _streetAddressField.Clear();
-            _streetAddressField.SendKeys(address);
+            _streetAddressField.SendKeys(details.Street);
 
             _cityField.Clear();
-            _cityField.SendKeys(city);
+            _cityField.SendKeys(details.City);
 
             _postcodeField.Clear();
-            _postcodeField.SendKeys(postcode);
+            _postcodeField.SendKeys(details.Postcode);
 
             _phoneField.Clear();
-            _phoneField.SendKeys(phoneNo);
+            _phoneField.SendKeys(details.Phone);
 
             //_checkPaymentsField.Click();
 
@@ -62,7 +62,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         {
 
             /*
-             * This gives a StaleElementException?? Needed to use JavaScript to click on the button.
+             * This gives a StaleElementException - Needed to use JavaScript to click on the button.
              * Seems like the Place order button is using ajax to render the screen. Even though the button can be seen,
              * it is not clickable. 
             */
