@@ -21,9 +21,12 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         }
 
         //Locators
-        public string AccountTitle
+        private IWebElement _accountTitle => _driver.FindElement(By.CssSelector("#post-7 > header > h1"));
+
+        //Service Methods
+        public string GetAccountTitle()
         {
-            get => _driver.FindElement(By.CssSelector("#post-7 > header > h1")).Text;
+            return _accountTitle.Text;
         }
     }
 }

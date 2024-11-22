@@ -12,7 +12,6 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
     {
         private IWebDriver _driver; //Field to hold webdriver for page interactions
 
-
         //Constructor
         public LoginPage(IWebDriver driver) //Get the driver from the calling test
         {
@@ -27,18 +26,16 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         
 
         //Service Methods
-        public LoginPage SetUsername(string username)
+        public void SetUsername(string username)
         {
             _usernameField.Clear();
             _usernameField.SendKeys(username);
-            return this;
         }
 
-        public LoginPage SetPassword(string password)
+        public void SetPassword(string password)
         {
             _passwordField.Clear();
             _passwordField.SendKeys(password);
-            return this;
         }
 
         public void SubmitForm()
@@ -46,16 +43,16 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
             _loginButton.Click();
         }
 
-        //Helper methods
-        public void ClickDismiss()
-        {
-            _dismissButton.Click(); //remove the warning at the bottom to avoid missing any elements on the screen
-        }
         public void Login(string username, string password)
         {
             SetUsername(username);
             SetPassword(password);
             SubmitForm();
+        }
+
+        public void ClickDismiss()
+        {
+            _dismissButton.Click(); //remove the warning at the bottom to avoid missing any elements on the screen
         }
     }
 }

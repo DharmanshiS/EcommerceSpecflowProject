@@ -19,13 +19,13 @@ using System.ComponentModel;
 namespace uk.co.nfocus.EcommerceProject.Utilities
 {
     [Binding]
-    public class Base
+    public class Hooks
     {
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver; //field to share driver between class methods
         private readonly WebDriverWrapper _webDriverWrapper;
 
-        public Base(IObjectContainer container, WebDriverWrapper wrapper, ScenarioContext scenarioContext) //Constructor will be run by Specflow when it instantiates this class to use the [Before] step. When it does that it makes a ScenarioContext object and it is shared between the classes
+        public Hooks(WebDriverWrapper wrapper, ScenarioContext scenarioContext) //Constructor will be run by Specflow when it instantiates this class to use the [Before] step. When it does that it makes a ScenarioContext object and it is shared between the classes
         {
             _webDriverWrapper = wrapper; //the wrapper will be instanticated and passed in by Specflow
             _scenarioContext = scenarioContext;
@@ -52,11 +52,9 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             
             _webDriverWrapper.Driver = _driver; //Typesafe storage of WebDriver
             
-            _driver.Manage().Window.Maximize(); //Make the screen full size
+            _driver.Manage().Window.Maximize();
             _driver.Url = "https://www.edgewordstraining.co.uk/demo-site/my-account/";
-            
-
-
+            //_driver.Url = TestContext.Parameters["baseURL"];
         }
 
         [After]
@@ -65,10 +63,9 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);
             NavigationBarPOM.NavigateToMyAccount();
             NavigationBarPOM.Logout();
+            Console.WriteLine("Successfully logged out.");
 
-            Thread.Sleep(1000); //so the browser doesn't close so quickly
             _driver.Quit();
-
         }
     }
 }

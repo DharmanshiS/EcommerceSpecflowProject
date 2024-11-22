@@ -20,17 +20,12 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         }
 
         //Locators
-        public string AccountTitle
-        {
-            get => _driver.FindElement(By.CssSelector("#post-7 > header > h1")).Text;
-        }
         private IWebElement _firstNameField => _driver.FindElement(By.CssSelector("#billing_first_name"));
         private IWebElement _lastNameField => _driver.FindElement(By.CssSelector("#billing_last_name"));
         private IWebElement _streetAddressField => _driver.FindElement(By.CssSelector("#billing_address_1"));
         private IWebElement _cityField => _driver.FindElement(By.CssSelector("#billing_city"));
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneField => _driver.FindElement(By.CssSelector("#billing_phone"));
-        private IWebElement _checkPaymentsField => _driver.FindElement(By.CssSelector("#payment > ul > li.wc_payment_method.payment_method_cheque > label"));
         private IWebElement _placeOrderButton => Utilities.Helpers.Wait(_driver, By.CssSelector("#place_order"), 15);
 
         //Service methods
