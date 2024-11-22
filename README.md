@@ -1,4 +1,4 @@
-## E-commerce Final Project
+## nFocus E-commerce Final Project (Specflow)
 
 ### Objective: Develop two end-to-end tests that use SpecFlow and WebDriver.
 1) The test will login to an e-commerce site as a registered user, purchase an item of clothing, apply a discount code and check that the total is correct after the discount & shipping is applied.
@@ -9,4 +9,9 @@
 2) "dotnet test"
 3) Navigate to bin > debug > net6.0
 4) "allure generate --clean" (for allure report)
-5) allure open (to open the web server)
+5) "allure open" (open the web server to view the report)
+
+### Notes
+This project is only for demo purposes. Hence,
+1) The runsettings file has been committed.
+2) Latest Allure report has been added to show the latest results.
