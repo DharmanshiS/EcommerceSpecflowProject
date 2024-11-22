@@ -1,4 +1,4 @@
-## nFcous E-commerce Final Project (Specflow)
+## nFocus E-commerce Final Project (Specflow)
 
 ### Objective: Develop two end-to-end tests that use SpecFlow and WebDriver.
 1) The test will login to an e-commerce site as a registered user, purchase an item of clothing, apply a discount code and check that the total is correct after the discount & shipping is applied.
