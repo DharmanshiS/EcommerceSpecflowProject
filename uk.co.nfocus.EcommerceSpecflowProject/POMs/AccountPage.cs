@@ -1,12 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
 namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 {
     internal class AccountPage
@@ -15,7 +7,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 
 
         //Constructor
-        public AccountPage(IWebDriver driver) //Get the driver from the calling test
+        public AccountPage(IWebDriver driver)
         {
             this._driver = driver;
         }

@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
-using System;
+using Allure.Net.Commons;
 using TechTalk.SpecFlow;
 using uk.co.nfocus.EcommerceSpecflowProject.POMs;
 using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
@@ -27,12 +25,14 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         {
             LoginPage LoginPagePOM = new LoginPage(_driver);
             LoginPagePOM.ClickDismiss(); //remove the warning
-            LoginPagePOM.Login("dharmanshi.sangani@nfocus.co.uk", "mystrongpassword!"); //log in with capture group details from Feature File
-            Console.WriteLine("Attempted correct login details");
+            LoginPagePOM.Login("dharmanshi.sangani@nfocus.co.uk", "mystrongpassword!"); 
+            Console.WriteLine("Attempted correct login details.");
+            AllureApi.Step("Attempted correct login details.");
 
             AccountPage AccountPagePOM = new AccountPage(_driver);
             Assert.That(AccountPagePOM.GetAccountTitle(), Does.Contain("My account"), "Login was not successful."); //Check that login was successful
             Console.WriteLine("Successfully logged in.");
+            AllureApi.Step("Successfully logged in.");
         }
 
         [Given(@"the cart is empty")]
@@ -45,12 +45,14 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             {
                 CartPage CartPagePOM = new CartPage(_driver);
                 CartPagePOM.DeleteAllItems();
-                Console.WriteLine("Deleted all the items.");
+                Console.WriteLine("Deleted all the items from the cart.");
+                AllureApi.Step("Deleted all the items from the cart.");
             }
 
             NavigationBarPOM.HoverOverCartSymbol();
             Assert.That(NavigationBarPOM.GetCartEmptyMessage(), Does.Contain("No products in the cart"), "The cart is not empty yet."); //Check that the cart is empty
             Console.WriteLine("Cart is empty.");
+            AllureApi.Step("Cart is empty.");
         }
 
         [Given(@"I add the '([^']*)' to the cart")]
@@ -59,10 +61,12 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);
             NavigationBarPOM.NavigateToShop();
             Console.WriteLine("Successfully on the Shop Page.");
+            AllureApi.Step("Successfully on the Shop Page.");
 
             ShopPage ShopPagePOM = new ShopPage(_driver);
             ShopPagePOM.AddProductToCart(product);
-            Console.WriteLine("Successfully added first product to the cart.");
+            Console.WriteLine($"Successfully added the {product} to the cart.");
+            AllureApi.Step($"Successfully added the {product} to the cart.");
         }
 
         [Given(@"I am on the cart page")]
@@ -71,6 +75,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);
             NavigationBarPOM.ViewCartFromSymbol();
             Console.WriteLine("Successfully navigated to the cart page.");
+            AllureApi.Step("Successfully navigated to the cart page.");
         }
 
 
@@ -81,11 +86,12 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         public void WhenIApplyTheCoupon(string coupon)
         {
             CartPage CartPagePOM = new CartPage(_driver);
-            Console.WriteLine(coupon);
             CartPagePOM.AddCoupon(coupon);
             bool CouponCondition = CartPagePOM.GetCouponSuccessMessage().Contains("Coupon code applied successfully.");
             Assert.That(CouponCondition, Is.True, "Coupon code was not applied successfully."); // Assert that the coupon condition is true
             Console.WriteLine("Successfully applied the coupon.");
+            AllureApi.Step("Successfully applied the coupon.");
+
         }
 
 
@@ -100,14 +106,21 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             Assert.That(Discount, Is.EqualTo(ExpectedDiscount),
                 $"The discount applied is not {requiredPercentOff}%. The actual discount applied is {ActualPercentOff:F2}%.");
             Console.WriteLine($"The coupon has taken off {ActualPercentOff:F2} percent.");
+            AllureApi.Step($"The coupon has taken off {ActualPercentOff:F2} percent.");
         }
 
         [Then(@"the total cost is correct")]
         public void ThenTheTotalCostIsCorrect()
         {
             CartPage CartPagePOM = new CartPage(_driver);
-            Assert.That(CartPagePOM.GetCartTotal(), Is.EqualTo(CartPagePOM.GetCartSubtotal() + CartPagePOM.GetCartTotalShipping() - CartPagePOM.GetCartTotalCouponDiscount()));
-            Console.WriteLine("The cart total is equal to the sum of the subtotal and delivery, minus discount");
+            decimal CartTotal = CartPagePOM.GetCartTotal();
+            decimal CartSubtotal = CartPagePOM.GetCartSubtotal();
+            decimal CartShipping = CartPagePOM.GetCartTotalShipping();
+            decimal CartDiscount = CartPagePOM.GetCartTotalCouponDiscount();
+            Assert.That(CartTotal, Is.EqualTo(CartSubtotal + CartShipping - CartDiscount), 
+                $"The cart total is inccorect. The values obtained: Cart Subtotal: {CartSubtotal}, Cart Shipping: {CartShipping}, Cart Discount: {CartShipping}, Cart Total: {CartTotal}.");
+            Console.WriteLine("The cart total is equal to the sum of the subtotal and delivery, minus discount.");
+            AllureApi.Step("The cart total is equal to the sum of the subtotal and delivery, minus discount.");
         }
 
 
@@ -120,6 +133,8 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             CartPage CartPagePOM = new CartPage(_driver);
             CartPagePOM.Checkout();
             Console.WriteLine("Successfully pressed 'checkout'.");
+            AllureApi.Step("Successfully pressed 'checkout'.");
+
 
             CheckoutPage CheckoutPagePOM = new CheckoutPage(_driver);
             BillingDetails billingDetails = new BillingDetails(
@@ -132,12 +147,17 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
                 );  //billing details object
             CheckoutPagePOM.FillBillingDetails(billingDetails);
             Console.WriteLine("Successfully filled in the billing details.");
+            AllureApi.Step("Successfully filled in the billing details.");
+
             CheckoutPagePOM.PlaceOrder();
             Console.WriteLine("Successfully placed the order.");
+            AllureApi.Step("Successfully placed the order.");
 
             OrderReceivedPage OrderReceivedPagePOM = new OrderReceivedPage(_driver);
             _scenarioContext["OrderNumberOnOrderReceivedPage"] = OrderReceivedPagePOM.GetOrderNumber();
-            Console.WriteLine("Successfully captured the order number onthe Order Received page.");
+            Console.WriteLine($"Successfully captured the order number {_scenarioContext["OrderNumberOnOrderReceivedPage"]} on the Order Received page.");
+            AllureApi.Step($"Successfully captured the order number {_scenarioContext["OrderNumberOnOrderReceivedPage"]} on the Order Received page.");
+
         }
 
         [Then(@"it should show the order in My Orders")]
@@ -146,26 +166,15 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);
             NavigationBarPOM.NavigateToMyAccount();
             NavigationBarPOM.NavigateToOrders();
+            Console.WriteLine("Successfully on the Orders page.");
+            AllureApi.Step("Successfully on the Orers page.");
            
             OrdersPage OrdersPagePOM = new OrdersPage(_driver);
             string OrderNumberOnOrdersPage = OrdersPagePOM.GetLatestOrderNumber();
-            Assert.That(OrderNumberOnOrdersPage, Is.EqualTo(_scenarioContext["OrderNumberOnOrderReceivedPage"]), "Order numbers do not match from Order Received page and Orders Page");
-            Console.WriteLine("The order number given at Order Received matches with My Orders.");
+            Assert.That(OrderNumberOnOrdersPage, Is.EqualTo(_scenarioContext["OrderNumberOnOrderReceivedPage"]), 
+                $"Order numbers do not match from Order Received page {_scenarioContext["OrderNumberOnOrderReceivedPage"]} and Orders Page {OrderNumberOnOrdersPage}.");
+            Console.WriteLine($"The order number given at Order Received matches with My Orders: {OrderNumberOnOrdersPage}.");
+            AllureApi.Step($"The order number given at Order Received matches with My Orders: {OrderNumberOnOrdersPage}.");
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

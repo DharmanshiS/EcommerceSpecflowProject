@@ -1,11 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 {
@@ -15,7 +9,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 
 
         //Constructor
-        public CartPage(IWebDriver driver) //Get the driver from the calling test
+        public CartPage(IWebDriver driver) 
         {
             this._driver = driver;
         }
@@ -28,7 +22,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         private IWebElement _cartTotalCouponDiscount => Utilities.Helpers.Wait(_driver, By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-edgewords > td > span"), 5);
         private IWebElement _cartTotalShipping => _driver.FindElement(By.CssSelector("#shipping_method > li > label > span > bdi"));
         private IWebElement _cartTotalTotal => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span > bdi"));
-        private IWebElement _checkoutButton => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > div > a"));
+        private IWebElement _checkoutButton => Utilities.Helpers.Wait(_driver, By.LinkText("\r\n\tProceed to checkout"), 3);
         
 
         //Service Methods
@@ -62,13 +56,11 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
                 }
                 catch (NoSuchElementException)
                 {
-                    // No more delete buttons found
-                    itemsPresent = false;
+                    itemsPresent = false; // No more delete buttons found
                 }
             } while (itemsPresent);
         }
 
-        //all Cart Total fields for assertions
         public decimal GetCartSubtotal()
         {
             return decimal.Parse(Regex.Replace(_cartSubtotal.Text, @"[^\d.]", ""));

@@ -1,12 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.Common;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 {
@@ -16,7 +10,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 
 
         //Constructor
-        public OrdersPage(IWebDriver driver) //Get the driver from the calling test
+        public OrdersPage(IWebDriver driver)
         {
             this._driver = driver;
         }

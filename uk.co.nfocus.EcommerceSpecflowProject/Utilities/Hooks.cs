@@ -3,17 +3,9 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Allure.Net.Commons;
 using uk.co.nfocus.EcommerceSpecflowProject.POMs;
 using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
-using BoDi;
-using System.ComponentModel;
-
-
 
 
 namespace uk.co.nfocus.EcommerceProject.Utilities
@@ -60,6 +52,13 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
         [After]
         public void Teardown()
         {
+            if (_scenarioContext.TestError != null)
+            {
+                string ScreenshotPath = Helpers.CaptureScreenshot(_driver);
+                //AllureApi.AddAttachment("screenshot.png", "image/png", ScreenshotPath);
+                //Console.WriteLine($"Successfully added a screenshot to the allure report and saved in file path: {ScreenshotPath}");
+            }
+
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);
             NavigationBarPOM.NavigateToMyAccount();
             NavigationBarPOM.Logout();
