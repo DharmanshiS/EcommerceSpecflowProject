@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System.Text.RegularExpressions;
+using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
 
 namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 {
@@ -22,14 +23,13 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         private IWebElement _cartTotalCouponDiscount => Utilities.Helpers.Wait(_driver, By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-edgewords > td > span"), 5);
         private IWebElement _cartTotalShipping => _driver.FindElement(By.CssSelector("#shipping_method > li > label > span > bdi"));
         private IWebElement _cartTotalTotal => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span > bdi"));
-        private IWebElement _checkoutButton => Utilities.Helpers.Wait(_driver, By.LinkText("\r\n\tProceed to checkout"), 3);
+        private IWebElement _checkoutButton => _driver.FindElement(By.CssSelector(".checkout-button.button.alt.wc-forward"));
         
 
         //Service Methods
         public void AddCoupon(string coupon)
         {
-            _couponBox.Clear();
-            _couponBox.SendKeys(coupon);
+            Helpers.FillInputBox(_couponBox, coupon);
             _applyCouponButton.Click();
         }
         public string GetCouponSuccessMessage()

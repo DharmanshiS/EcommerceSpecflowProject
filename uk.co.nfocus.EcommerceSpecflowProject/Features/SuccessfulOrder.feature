@@ -14,7 +14,7 @@ Scenario Outline: Check the coupon code is applied correctly
 
 Examples:
 	| coupon    | discount |
-	| edgewords | 10       |
+	| edgewords | 15       |
 
 Scenario: Check the order is present in My Orders
 	When I checkout with the billing details

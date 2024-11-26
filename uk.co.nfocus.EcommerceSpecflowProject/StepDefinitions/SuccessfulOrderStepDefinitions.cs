@@ -25,7 +25,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         {
             LoginPage LoginPagePOM = new LoginPage(_driver);
             LoginPagePOM.ClickDismiss(); //remove the warning
-            LoginPagePOM.Login("dharmanshi.sangani@nfocus.co.uk", "mystrongpassword!"); 
+            LoginPagePOM.Login(TestContext.Parameters["username"], TestContext.Parameters["password"]); 
             Console.WriteLine("Attempted correct login details.");
             AllureApi.Step("Attempted correct login details.");
 

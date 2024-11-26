@@ -3,19 +3,20 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
-using Allure.Net.Commons;
 using uk.co.nfocus.EcommerceSpecflowProject.POMs;
 using uk.co.nfocus.EcommerceSpecflowProject.Utilities;
-
+using Allure.Net.Commons;
+using System.IO;
 
 namespace uk.co.nfocus.EcommerceProject.Utilities
 {
     [Binding]
     public class Hooks
     {
-        private readonly ScenarioContext _scenarioContext;
+        
         private IWebDriver _driver; //field to share driver between class methods
         private readonly WebDriverWrapper _webDriverWrapper;
+        private readonly ScenarioContext _scenarioContext;
 
         public Hooks(WebDriverWrapper wrapper, ScenarioContext scenarioContext) //Constructor will be run by Specflow when it instantiates this class to use the [Before] step. When it does that it makes a ScenarioContext object and it is shared between the classes
         {
@@ -27,6 +28,7 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
         [Before]
         public void SetUp()
         {
+            Console.WriteLine("the first thing");
             string browser = TestContext.Parameters["browser"] ?? "chrome";
 
             switch (browser)
@@ -45,8 +47,8 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             _webDriverWrapper.Driver = _driver; //Typesafe storage of WebDriver
             
             _driver.Manage().Window.Maximize();
-            _driver.Url = "https://www.edgewordstraining.co.uk/demo-site/my-account/";
-            //_driver.Url = TestContext.Parameters["baseURL"];
+            //_driver.Url = "https://www.edgewordstraining.co.uk/demo-site/my-account/";
+            _driver.Url = TestContext.Parameters["baseURL"];
         }
 
         [After]
@@ -54,9 +56,11 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
         {
             if (_scenarioContext.TestError != null)
             {
-                string ScreenshotPath = Helpers.CaptureScreenshot(_driver);
-                //AllureApi.AddAttachment("screenshot.png", "image/png", ScreenshotPath);
-                //Console.WriteLine($"Successfully added a screenshot to the allure report and saved in file path: {ScreenshotPath}");
+                string[] Screenshot = Helpers.CaptureScreenshot(_driver);
+                Console.WriteLine(Screenshot[0]);
+                Console.WriteLine(Screenshot[1]);
+                AllureApi.AddAttachment(Screenshot[0], "image/png", Screenshot[1]);
+                
             }
 
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);

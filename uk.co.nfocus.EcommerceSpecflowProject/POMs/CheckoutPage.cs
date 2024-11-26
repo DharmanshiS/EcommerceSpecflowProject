@@ -23,28 +23,16 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         private IWebElement _cityField => _driver.FindElement(By.CssSelector("#billing_city"));
         private IWebElement _postcodeField => _driver.FindElement(By.CssSelector("#billing_postcode"));
         private IWebElement _phoneField => _driver.FindElement(By.CssSelector("#billing_phone"));
-        private IWebElement _placeOrderButton => Utilities.Helpers.Wait(_driver, By.CssSelector("#place_order"), 15);
 
         //Service methods
         public void FillBillingDetails(BillingDetails details)
         {
-            _firstNameField.Clear();
-            _firstNameField.SendKeys(details.FirstName);
-
-            _lastNameField.Clear();
-            _lastNameField.SendKeys(details.LastName);
-
-            _streetAddressField.Clear();
-            _streetAddressField.SendKeys(details.Street);
-
-            _cityField.Clear();
-            _cityField.SendKeys(details.City);
-
-            _postcodeField.Clear();
-            _postcodeField.SendKeys(details.Postcode);
-
-            _phoneField.Clear();
-            _phoneField.SendKeys(details.Phone);
+            Helpers.FillInputBox(_firstNameField, details.FirstName);
+            Helpers.FillInputBox(_lastNameField, details.LastName);
+            Helpers.FillInputBox(_streetAddressField, details.Street);
+            Helpers.FillInputBox(_cityField, details.City);
+            Helpers.FillInputBox(_postcodeField, details.Postcode);
+            Helpers.FillInputBox(_phoneField, details.Phone);
         }
 
         public void PlaceOrder()

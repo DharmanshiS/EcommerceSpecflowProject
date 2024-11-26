@@ -18,20 +18,24 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.Utilities
             return element;
         }
 
-        public static string CaptureScreenshot(IWebDriver driver)
+        public static string[] CaptureScreenshot(IWebDriver driver)
         {
             string Timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             string FileName = $"pointOfFailure_{Timestamp}.png";
             string ProjectDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string FilePath = Path.Combine(ProjectDirectory, FileName);
+            string[] FileDetails = { FileName, FilePath };
 
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
             screenshot.SaveAsFile(FilePath);
-            return FilePath;
+            return FileDetails;
         }
 
 
-        //sending keys
-
+        public static void FillInputBox(IWebElement element, string text)
+        {
+            element.Clear();
+            element.SendKeys(text);
+        }
     }
 }

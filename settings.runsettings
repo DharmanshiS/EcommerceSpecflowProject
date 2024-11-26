@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<TestRunParameters>
-		<Parameter name="baseURL" value="https://www.edgewordstraining.co.uk/demo-site/my-account/" />
-		<Parameter name="browser" value="chrome" />
-		<Parameter name="username1" value="dharmanshi.sangani@nfocus.co.uk" />
-		<Parameter name="password1" value="mystrongpassword!" />
+		<Parameter name="baseURL" value="https://www.edgewordstraining.co.uk/demo-site/my-account/"/>
+		<Parameter name="browser" value="chrome"/>
+		<Parameter name="username" value="dharmanshi.sangani@nfocus.co.uk"/>
+		<Parameter name="password" value="mystrongpassword!"/>
 	</TestRunParameters>
 </RunSettings>
