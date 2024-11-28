@@ -1,12 +1,4 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V128.DOM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace uk.co.nfocus.EcommerceSpecflowProject.Utilities
+﻿namespace uk.co.nfocus.EcommerceSpecflowProject.Utilities
 {
     class BillingDetails
     {

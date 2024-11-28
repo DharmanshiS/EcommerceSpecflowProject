@@ -25,7 +25,15 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         {
             LoginPage LoginPagePOM = new LoginPage(_driver);
             LoginPagePOM.ClickDismiss(); //remove the warning
-            LoginPagePOM.Login(TestContext.Parameters["username"], TestContext.Parameters["password"]); 
+            string username = TestContext.Parameters["username"];
+            string password = TestContext.Parameters["password"];
+            if (username is null || password is null) //Check if runsettings file has both values
+            {
+                Assert.Fail("Runsettings file has not defined parameters 'username' and 'password'."); 
+                Console.WriteLine("Runsettings file has not defined parameters 'username' and 'password'.");
+                AllureApi.Step("Runsettings file has not defined parameters 'username' and 'password'.");
+            }
+            LoginPagePOM.Login(username, password); 
             Console.WriteLine("Attempted correct login details.");
             AllureApi.Step("Attempted correct login details.");
 
@@ -72,8 +80,10 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         [Given(@"I am on the cart page")]
         public void GivenIAmOnTheCartPage()
         {
-            NavigationBar NavigationBarPOM = new NavigationBar(_driver);
-            NavigationBarPOM.ViewCartFromSymbol();
+            //NavigationBar NavigationBarPOM = new NavigationBar(_driver);
+            //NavigationBarPOM.ViewCartFromSymbol();
+            ShopPage ShopPagePOM = new ShopPage(_driver);
+            ShopPagePOM.GoToCart();
             Console.WriteLine("Successfully navigated to the cart page.");
             AllureApi.Step("Successfully navigated to the cart page.");
         }

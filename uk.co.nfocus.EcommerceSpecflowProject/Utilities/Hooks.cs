@@ -28,7 +28,6 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
         [Before]
         public void SetUp()
         {
-            Console.WriteLine("the first thing");
             string browser = TestContext.Parameters["browser"] ?? "chrome";
 
             switch (browser)
@@ -47,7 +46,6 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             _webDriverWrapper.Driver = _driver; //Typesafe storage of WebDriver
             
             _driver.Manage().Window.Maximize();
-            //_driver.Url = "https://www.edgewordstraining.co.uk/demo-site/my-account/";
             _driver.Url = TestContext.Parameters["baseURL"];
         }
 
