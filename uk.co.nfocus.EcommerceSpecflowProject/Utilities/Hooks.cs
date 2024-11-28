@@ -55,10 +55,8 @@ namespace uk.co.nfocus.EcommerceProject.Utilities
             if (_scenarioContext.TestError != null)
             {
                 string[] Screenshot = Helpers.CaptureScreenshot(_driver);
-                Console.WriteLine(Screenshot[0]);
-                Console.WriteLine(Screenshot[1]);
                 AllureApi.AddAttachment(Screenshot[0], "image/png", Screenshot[1]);
-                
+                Console.WriteLine($"Successfully taken a screenshot of the point of failure, stored in {Screenshot[1]}");
             }
 
             NavigationBar NavigationBarPOM = new NavigationBar(_driver);
