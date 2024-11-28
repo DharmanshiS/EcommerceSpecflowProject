@@ -14,7 +14,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         }
 
         //Locators
-        private IWebElement _orderNumber => Utilities.Helpers.Wait(_driver, By.CssSelector("#post-6 > div > div > div > ul > li.woocommerce-order-overview__order.order > strong"), 7);
+        private IWebElement _orderNumber => Utilities.Helpers.Wait(_driver, By.CssSelector("li[class='woocommerce-order-overview__order order'] strong"), 7);
 
 
         //Service methods

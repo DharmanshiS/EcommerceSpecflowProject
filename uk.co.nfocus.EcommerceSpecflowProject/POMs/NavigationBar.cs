@@ -15,8 +15,8 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
 
         //Locators
         private IWebElement _shopNavigation => _driver.FindElement(By.CssSelector("#menu-item-43 > a"));
-        private IWebElement _logoutNavigation => _driver.FindElement(By.CssSelector("#post-7 > div > div > nav > ul > li.woocommerce-MyAccount-navigation-link.woocommerce-MyAccount-navigation-link--customer-logout > a"));
-        private IWebElement _ordersNavigation => _driver.FindElement(By.CssSelector("#post-7 > div > div > nav > ul > li.woocommerce-MyAccount-navigation-link.woocommerce-MyAccount-navigation-link--orders > a"));
+        private IWebElement _logoutNavigation => _driver.FindElement(By.CssSelector("li[class='woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--customer-logout'] a"));
+        private IWebElement _ordersNavigation => _driver.FindElement(By.CssSelector("li[class='woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--orders'] a"));
         private IWebElement _myAccountNavigation => _driver.FindElement(By.CssSelector("#menu-item-46 > a"));
         private IWebElement _cartSymbol => _driver.FindElement(By.CssSelector("#site-header-cart > li:nth-child(1) > a"));
         private IWebElement _cartMessage => _driver.FindElement(By.CssSelector("#site-header-cart > li:nth-child(2) > div > div > p"));

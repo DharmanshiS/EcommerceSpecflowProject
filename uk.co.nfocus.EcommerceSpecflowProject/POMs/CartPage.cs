@@ -18,11 +18,11 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         //Locators
         private IWebElement _couponBox => _driver.FindElement(By.CssSelector("#coupon_code"));
         private IWebElement _applyCouponButton => _driver.FindElement(By.CssSelector("button[value='Apply coupon']"));
-        private IWebElement _couponSuccessMessage => Utilities.Helpers.Wait(_driver, By.CssSelector("#post-5 > div > div > div.woocommerce-notices-wrapper > div"), 5);
-        private IWebElement _cartSubtotal => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-subtotal > td > span > bdi"));
-        private IWebElement _cartTotalCouponDiscount => Utilities.Helpers.Wait(_driver, By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.cart-discount.coupon-edgewords > td > span"), 5);
+        private IWebElement _couponSuccessMessage => Helpers.Wait(_driver, By.CssSelector("#post-5 > div > div > div.woocommerce-notices-wrapper > div"), 5);
+        private IWebElement _cartSubtotal => _driver.FindElement(By.CssSelector("tr[class='cart-subtotal'] bdi:nth-child(1)"));
+        private IWebElement _cartTotalCouponDiscount(string coupon) => Helpers.Wait(_driver, By.CssSelector($"tr[class='cart-discount coupon-{coupon}'] td span"), 5);
         private IWebElement _cartTotalShipping => _driver.FindElement(By.CssSelector("#shipping_method > li > label > span > bdi"));
-        private IWebElement _cartTotalTotal => _driver.FindElement(By.CssSelector("#post-5 > div > div > div.cart-collaterals > div > table > tbody > tr.order-total > td > strong > span > bdi"));
+        private IWebElement _cartTotalTotal => _driver.FindElement(By.CssSelector("tr[class='order-total'] bdi:nth-child(1)"));
         private IWebElement _checkoutButton => _driver.FindElement(By.CssSelector(".checkout-button.button.alt.wc-forward"));
         
 
@@ -65,9 +65,9 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         {
             return decimal.Parse(Regex.Replace(_cartSubtotal.Text, @"[^\d.]", ""));
         }
-        public decimal GetCartTotalCouponDiscount()
+        public decimal GetCartTotalCouponDiscount(string coupon)
         {
-            return decimal.Parse(Regex.Replace(_cartTotalCouponDiscount.Text, @"[^\d.]", ""));
+            return decimal.Parse(Regex.Replace(_cartTotalCouponDiscount(coupon).Text, @"[^\d.]", ""));
         }
         public decimal GetCartTotalShipping()
         {

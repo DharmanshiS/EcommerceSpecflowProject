@@ -15,7 +15,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         //Locators
         private IWebElement _usernameField => _driver.FindElement(By.CssSelector("#username"));
         private IWebElement _passwordField => _driver.FindElement(By.CssSelector("#password"));
-        private IWebElement _loginButton => _driver.FindElement(By.CssSelector("#customer_login > div.u-column1.col-1 > form > p:nth-child(3) > button"));
+        private IWebElement _loginButton => _driver.FindElement(By.CssSelector("button[value='Log in']"));
         private IWebElement _dismissButton => _driver.FindElement(By.LinkText("Dismiss"));
         
 

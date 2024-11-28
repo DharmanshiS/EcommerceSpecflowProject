@@ -16,7 +16,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.POMs
         }
 
         //Locators
-        private IWebElement _firstOrderNumber => _driver.FindElement(By.CssSelector("#post-7 > div > div > div > table > tbody > tr > td.woocommerce-orders-table__cell.woocommerce-orders-table__cell-order-number > a"));
+        private IWebElement _firstOrderNumber => _driver.FindElement(By.CssSelector("tbody tr:nth-child(1) td:nth-child(1) a:nth-child(1)"));
 
         //Service Methods
         public string GetLatestOrderNumber()

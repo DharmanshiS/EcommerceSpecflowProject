@@ -93,7 +93,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Check the coupon code is applied correctly")]
-        [NUnit.Framework.TestCaseAttribute("edgewords", "15", null)]
+        [NUnit.Framework.TestCaseAttribute("nfocus", "15", null)]
         public void CheckTheCouponCodeIsAppliedCorrectly(string coupon, string discount, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

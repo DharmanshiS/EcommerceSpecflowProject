@@ -80,8 +80,6 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         [Given(@"I am on the cart page")]
         public void GivenIAmOnTheCartPage()
         {
-            //NavigationBar NavigationBarPOM = new NavigationBar(_driver);
-            //NavigationBarPOM.ViewCartFromSymbol();
             ShopPage ShopPagePOM = new ShopPage(_driver);
             ShopPagePOM.GoToCart();
             Console.WriteLine("Successfully navigated to the cart page.");
@@ -97,6 +95,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         {
             CartPage CartPagePOM = new CartPage(_driver);
             CartPagePOM.AddCoupon(coupon);
+            _scenarioContext["coupon"] = coupon;
             bool CouponCondition = CartPagePOM.GetCouponSuccessMessage().Contains("Coupon code applied successfully.");
             Assert.That(CouponCondition, Is.True, "Coupon code was not applied successfully."); // Assert that the coupon condition is true
             Console.WriteLine("Successfully applied the coupon.");
@@ -110,7 +109,7 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
         {
             CartPage CartPagePOM = new CartPage(_driver);
             decimal Subtotal = CartPagePOM.GetCartSubtotal();
-            decimal Discount = CartPagePOM.GetCartTotalCouponDiscount();
+            decimal Discount = CartPagePOM.GetCartTotalCouponDiscount((string)_scenarioContext["coupon"]);
             decimal ExpectedDiscount = Subtotal * requiredPercentOff / 100;
             decimal ActualPercentOff = (Discount / Subtotal) * 100;
             Assert.That(Discount, Is.EqualTo(ExpectedDiscount),
@@ -126,11 +125,11 @@ namespace uk.co.nfocus.EcommerceSpecflowProject.StepDefinitions
             decimal CartTotal = CartPagePOM.GetCartTotal();
             decimal CartSubtotal = CartPagePOM.GetCartSubtotal();
             decimal CartShipping = CartPagePOM.GetCartTotalShipping();
-            decimal CartDiscount = CartPagePOM.GetCartTotalCouponDiscount();
+            decimal CartDiscount = CartPagePOM.GetCartTotalCouponDiscount((string)_scenarioContext["coupon"]);
             Assert.That(CartTotal, Is.EqualTo(CartSubtotal + CartShipping - CartDiscount), 
                 $"The cart total is inccorect. The values obtained: Cart Subtotal: {CartSubtotal}, Cart Shipping: {CartShipping}, Cart Discount: {CartShipping}, Cart Total: {CartTotal}.");
-            Console.WriteLine("The cart total is equal to the sum of the subtotal and delivery, minus discount.");
-            AllureApi.Step("The cart total is equal to the sum of the subtotal and delivery, minus discount.");
+            Console.WriteLine($"The cart total ({CartTotal}) is equal to the sum of the subtotal ({CartSubtotal}) and delivery ({CartShipping}), minus discount ({CartDiscount}).");
+            AllureApi.Step($"The cart total ({CartTotal}) is equal to the sum of the subtotal ({CartSubtotal}) and delivery ({CartShipping}), minus discount ({CartDiscount}).");
         }
 
 
